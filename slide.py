@@ -15,7 +15,8 @@ def images():
             im.extend(images_for(path))
     else:
         im.extend(images_for(os.getcwd()))
-    return sorted(im, key=lambda s:s.lower())
+    return sorted(im)
+    #return sorted(im, key=lambda s:s.lower())
 
 def images_for(path):
     if os.path.isfile(path):
@@ -141,9 +142,17 @@ class App():
         return self._images[self._image_pos]
 
 def scaled_size(width, height, box_width, box_height):
-    if width > height:
-        return box_width, int(height/float(width) * box_width)
+    source_ratio = width / float(height)
+    box_ratio = box_width / float(box_height)
+    if source_ratio < box_ratio:
+        return int(box_height/float(height) * width), box_height
     else:
-        return int(width/float(height) * box_height), box_height
+        return box_width, int(box_width/float(width) * height)
 
-app=App()
+def test_scaled_size():
+    x = scaled_size(width=1871, height=1223, box_width=1920, box_height=1080)
+    assert x == (1652, 1080)
+    x = scaled_size(width=100, height=100, box_width=1920, box_height=1080)
+    assert x ==(1080, 1080)
+
+if __name__ == '__main__': app=App()

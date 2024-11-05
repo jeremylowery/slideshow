@@ -3,10 +3,10 @@ import os
 import sys
 import time
 
-import Image
-import ImageTk
+from PIL import Image
+from PIL import ImageTk
 
-import Tkinter as tk
+import tkinter as tk
 
 def images():
     im = []
@@ -15,8 +15,7 @@ def images():
             im.extend(images_for(path))
     else:
         im.extend(images_for(os.getcwd()))
-    return sorted(im)
-    #return sorted(im, key=lambda s:s.lower())
+    return sorted(im, key=lambda s:s.lower())
 
 def images_for(path):
     if os.path.isfile(path):
@@ -114,7 +113,7 @@ class App():
             if self.image.size[1] == self.box_height: return
         width, height = self.original_image.size
         new_size = scaled_size(width, height, self.box_width, self.box_height)
-        self.image = self.original_image.resize(new_size, Image.ANTIALIAS)
+        self.image = self.original_image.resize(new_size, Image.LANCZOS)
         self.label.place(x=self.box_width/2, y=self.box_height/2, anchor=tk.CENTER)
         tkimage = ImageTk.PhotoImage(self.image)
         self.label.configure(image=tkimage)

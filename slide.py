@@ -1,3 +1,9 @@
+# /// script
+# dependencies = [
+#   "pillow",
+# ]
+# ///
+
 import glob
 import os
 import sys
@@ -63,7 +69,6 @@ class App():
             self.root.attributes('-fullscreen', True)
         else:
             self.root.attributes('-fullscreen', False)
-            self.root.attributes("-zoomed", True)
 
     def esc_handler(self, e):
         self.root.destroy()
